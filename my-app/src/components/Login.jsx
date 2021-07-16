@@ -14,8 +14,8 @@ import Button from 'react-bootstrap/Button'
 class Login extends React.Component {
 
     state = {
-        reservation: { // INITIAL STATE
-            email: '',
+        user: { // INITIAL STATE
+            name: '',
             password: ''
            
         }
@@ -24,12 +24,12 @@ class Login extends React.Component {
     submitReservation = async (e) => {
         // let's prevent the default browser behavior
         e.preventDefault()
-        console.log(this.state.reservation)
+        console.log(this.state.user)
         try {
-            let response = await fetch('',
+            let response = await fetch('http://localhost:3001/users/login',
                 {
                     method: 'POST',
-                    body: JSON.stringify(this.state.reservation),
+                    body: JSON.stringify(this.state.user),
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -37,15 +37,12 @@ class Login extends React.Component {
             // now response holds the result of my operation
             // the ok property of it will tell me if everything went well or not
             if (response.ok) {
-                alert('your reservation has been saved correctly')
+                alert('')
                 this.setState({
-                    reservation: { // INITIAL STATE
+                    user: { // INITIAL STATE
                         name: '',
-                        phone: '',
-                        numberOfPersons: 1,
-                        smoking: false,
-                        dateTime: '',
-                        specialRequests: ''
+                        password: ''
+                       
                     }
                 })
                 setTimeout(() => {
@@ -66,8 +63,8 @@ class Login extends React.Component {
         console.log('the field I need to change in the reservation object is', id)
         // id can be "name", "phone", "smoking"
         this.setState({
-            reservation: {
-                ...this.state.reservation,
+            user: {
+                ...this.state.user,
                 [id]: id === e.target.value
             }
         })
@@ -96,44 +93,60 @@ class Login extends React.Component {
         return (
             // React Fragment, just for wrap multiple elements out of my return statement
             <>
-                <h2>Book your table NOW!</h2>
+                <h2>Login</h2>
                 <Form onSubmit={this.submitReservation}>
                     <Form.Group>
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>name</Form.Label>
                         <Form.Control
-                            id="email"
-                            value={this.state.reservation.email}
+                            id="name"
+                            value={this.state.user.name}
                             // onChange={this.handleChange}
                             onChange={(e) => this.setState({
                                 user: {
                                     // I want here to preserve the actual content
                                     // of the reservation object
-                                    ...this.state.reservation,
+                                    ...this.state.user,
                                     // we're copying every key/value pair from this.state.reservation
                                     // the spread operator will copy over every property
                                     // of this.state.reservation
-                                    email: e.target.value
+                                    name: e.target.value
                                 }
                             })}
                             type="text"
-                            placeholder="Enter mail" />
+                            placeholder="Enter name" />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Phone</Form.Label>
+                        <Form.Label>password</Form.Label>
                         <Form.Control
-                            id="phone"
-                            value={this.state.reservation.phone}
-                            onChange={this.handleChange}
-                            type="number"
-                            placeholder="Enter phone" />
+                            id="name"
+                            value={this.state.user.password}
+                            // onChange={this.handleChange}
+                            onChange={(e) => this.setState({
+                                user: {
+                                    // I want here to preserve the actual content
+                                    // of the reservation object
+                                    ...this.state.user,
+                                    // we're copying every key/value pair from this.state.reservation
+                                    // the spread operator will copy over every property
+                                    // of this.state.reservation
+                                    password: e.target.value
+                                }
+                            })}
+                            type="text"
+                            placeholder="Enter name" />
                     </Form.Group>
+                    
+                    
                   
                     <Button
                         variant="info"
                         type="submit">
                         Send reservation
                     </Button>
+                   
                 </Form>
+                <input></input>
+                    <a href="http://localhost:3001/users/googleLogin"><button>Google Login</button></a>
             </>
         )
     }
